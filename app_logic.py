@@ -1,5 +1,5 @@
 # Plik: app_logic.py
-from views.dashboard import DashboardView
+from views.Dasboard.dashboard import DashboardView
 from views.klienci import KlienciView
 from views.ustawienia import UstawieniaView
 from views.Scraper.scraper import ScraperView

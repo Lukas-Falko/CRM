@@ -5,7 +5,7 @@ class DashboardView(ctk.CTkFrame):
         super().__init__(master, **kwargs)
     
         self.main_frame = ctk.CTkFrame(self)
-        self.main_frame.pack(pady=10, padx=10, fill="both", expand=True)       
+        self.main_frame.pack(pady=1, padx=1, fill="both", expand=True)       
 
         # Konfiguracja wag kolumn, żeby obie rozciągały się tak samo
         self.main_frame.grid_columnconfigure(0, weight=1)
@@ -18,7 +18,7 @@ class DashboardView(ctk.CTkFrame):
         self.url_entry = ctk.CTkEntry(self.sub_frame, placeholder_text="https://example.com/data")
         self.url_entry.pack(pady=15, padx=30, fill="x")
 
-        self.btn_right = ctk.CTkButton(self.sub_frame, text="Akcja Prawa")
+        self.btn_right = ctk.CTkButton(self.sub_frame, text="Pobierz dane")
         self.btn_right.pack(pady=5, padx=5)
 
         
@@ -30,14 +30,10 @@ class DashboardView(ctk.CTkFrame):
         self.url_entry = ctk.CTkEntry(self.sub_frame2, placeholder_text="Wybierz folder lub plik...")
         self.url_entry.pack(pady=15, padx=30, fill="x")
 
-        self.btn_right = ctk.CTkButton(self.sub_frame2, text="Akcja Prawa")
+        self.btn_right = ctk.CTkButton(self.sub_frame2, text="Wybierz folder")
         self.btn_right.pack(pady=5, padx=5)
 
-        self.check_var = ctk.StringVar(value="on")
- 
-        self.checkbox = ctk.CTkCheckBox(self.sub_frame2, text="Zaakceptuj regulamin", variable=self.check_var,onvalue="on", offvalue="off")
-        self.checkbox.pack(pady=10, padx=30)
-
+       
         
        
         
