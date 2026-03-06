@@ -1,6 +1,6 @@
 import customtkinter as ctk
-# from . import gramZielone as gz  # Zakładam, że są w tym samym folderze
-# from . import scraper_logika as sl
+from . import gramZielone as gz  # Zakładam, że są w tym samym folderze
+from . import scraper_logika as sl
 
 class ScraperView(ctk.CTkFrame):
     def __init__(self, master, **kwargs):
@@ -30,7 +30,13 @@ class ScraperView(ctk.CTkFrame):
         self.url_entry = ctk.CTkEntry(self.left_frame, placeholder_text="https://example.com/data")
         self.url_entry.pack(pady=(20, 10), padx=20, fill="x")
 
-        self.btn_download = ctk.CTkButton(self.left_frame, text="Pobierz dane", fg_color="#2c73d2")
+        self.btn_download = ctk.CTkButton(
+        self.left_frame, 
+        text="Pobierz dane", 
+        fg_color="#2c73d2",
+        command=lambda: sl.pobierzDane(self.url_entry.get())
+        )
+
         self.btn_download.pack(pady=10, padx=20)
 
         # Prawa kolumna - Lokalizacja
@@ -44,7 +50,7 @@ class ScraperView(ctk.CTkFrame):
             self.right_frame, 
             text="Przeglądaj", 
             width=100, 
-            command=lambda: print("Wybór lokalizacji...") # sl.wybierz_lokalizacje(self.path_entry.get())
+            command=lambda: sl.wybierz_lokalizacje(self.path_entry.get())
         )
         self.browse_butt.pack(pady=10, padx=20)
 

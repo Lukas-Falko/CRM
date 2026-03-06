@@ -84,6 +84,8 @@ def zapisz_do_csv(pakiet, sciezka_folderu):
 def run(url_entry):
     response = fetch_site(url_entry)
     pakiet = scrap_data(response)
+
+    
     zapisz_do_csv(pakiet, sl.sciezka)
     
     
