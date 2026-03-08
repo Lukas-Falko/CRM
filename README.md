@@ -63,10 +63,11 @@ Pozwala określić miejsce zapisania wygenerowanego pliku.
 
 ## Wybór formatu zapisu
 
-Możliwość zapisania danych w jednym lub kilku formatach:
+Możliwość zapisania danych w formacie CSV i Exel:
 
 * Excel
 * CSV
+* Baza dnaych (w budowie)
 
 ![Opis](readmePhotos/exel.png)
 
@@ -93,7 +94,7 @@ Główne technologie użyte w projekcie:
 
 ---
 
-# 🚀 Jak zacząć (instalacja)
+##\ 🚀 Jak zacząć (instalacja)
 
 ## Wymagania
 
