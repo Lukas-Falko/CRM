@@ -1,57 +1,126 @@
-# 🚀 CRM - narzędzia Python
-> Projekt w którym realizuje funkcjonalny dashboard z różnymi funkcjami oraz pełnoprawnym gui.
+# 🚀 CRM – narzędzia Python
+
+> Projekt przedstawiający funkcjonalny **dashboard z GUI**, który integruje różne narzędzia automatyzujące pracę z danymi.
 
 [![Status](https://img.shields.io/badge/status-active-success.svg)]()
-[![GitHub Issues](https://img.shields.io/github/issues/użytkownik/projekt.svg)](https://github.com/użytkownik/projekt/issues)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
 ---
 
-## 🧐 O Projekcie
+# 🧐 O projekcie
 
-Scraper GramWzielone - Scrapuje dane firm do pliku exel bądz CSV.
+**Scraper GramWzielone** to narzędzie umożliwiające automatyczne pobieranie danych firm ze strony:
 
-## Zakładka scraper
+https://www.gramwzielone.pl/baza-firm
 
-Pozwala na scrapowanie danych ze strony https://www.gramwzielone.pl/baza-firm.
+Zebrane dane mogą zostać zapisane w formacie **Excel lub CSV**, co pozwala na dalszą analizę lub wykorzystanie w procesach sprzedażowych i marketingowych.
 
-
-
-
-![Opis](<zrzut_ekranu_gui.png>) 
-
-- Tutaj wpisujemy link do strony z danymi
-
-
-
-Okienko 1 - wpisujemy link z zakladki baza firm
-Okienko 2 - wybieramy lokalizacje zapisu
-
-Frame 2 - wybieramy format zapisu
-
-Pole tekstowe wysweitla zapisane dane mozna je kopiować.
+Projekt jest częścią większego systemu **CRM Dashboard**, który docelowo będzie zawierał więcej modułów automatyzujących pracę z danymi.
 
 ---
 
-## 🛠 Technologia
-Wypisz główne narzędzia, których użyłeś:
-* [CustomTKinter](https://customtkinter.tomschimansky.com/) - Frontend
-* [Python](https://www.python.org/) - Backend
-* [PostgreSQL](https://www.postgresql.org/) - Baza danych
-* [Requests](https://pypi.org/project/requests/) - Zapytania 
-* [Csv](https://docs.python.org/3/library/csv.html) - Generowanie pliku
-* [Threading](https://docs.python.org/3/library/threading.html) - Obsługa wątków
+# 📊 Zakładka Dashboard
+
+Główna zakładka aplikacji zawierająca najważniejsze informacje o systemie.
+
+Aktualnie dostępny jest moduł sprawdzający **status strony**, który uruchamia się automatycznie podczas startu aplikacji.
 
 ---
 
-## 🚀 Jak zacząć? (Instalacja)
+# 🔎 Zakładka Scraper
 
-### Wymagania wstępne
-Co muszę mieć zainstalowane? (np. Node.js v18+, Docker, Python 3.10)
+Moduł umożliwiający scrapowanie danych firm ze strony:
 
-### Kroki instalacji
-1. **Sklonuj repozytorium**
+https://www.gramwzielone.pl/baza-firm
 
-   ```bash
-   git clone https://github.com/Lukas-Falko/CRM.git
-   cd nazwa-projektu
+Aby rozpocząć scrapowanie:
+
+1. Skopiuj link z dowolnej podstrony bazy firm.
+2. Wklej go do pola w aplikacji.
+3. Wybierz lokalizację zapisu.
+4. Wybierz format pliku.
+5. Uruchom proces scrapowania.
+
+---
+
+# 🖥 Opis interfejsu
+
+## Pole wklejenia linku
+
+Okno umożliwiające wklejenie linku z którego będą pobierane dane.
+
+![Opis](readmePhotos/zrzut_ekranu_gui.png)
+
+---
+
+## Wybór lokalizacji zapisu
+
+Pozwala określić miejsce zapisania wygenerowanego pliku.
+
+![Opis](readmePhotos/lokalizacja.png)
+
+---
+
+## Wybór formatu zapisu
+
+Możliwość zapisania danych w jednym lub kilku formatach:
+
+* Excel
+* CSV
+
+![Opis](readmePhotos/exel.png)
+
+---
+
+## Okno logów
+
+Wyświetla przebieg procesu scrapowania oraz ewentualne błędy.
+
+![Opis](readmePhotos/logi.png)
+
+---
+
+# 🛠 Technologie
+
+Główne technologie użyte w projekcie:
+
+* **Python** – logika aplikacji
+* **CustomTKinter** – GUI aplikacji
+* **PostgreSQL** – baza danych
+* **Requests** – obsługa zapytań HTTP
+* **CSV** – generowanie plików z danymi
+* **Threading** – obsługa wielowątkowości
+
+---
+
+# 🚀 Jak zacząć (instalacja)
+
+## Wymagania
+
+Przed uruchomieniem projektu upewnij się, że masz zainstalowane:
+
+* Python 3.10+
+* Git
+
+---
+
+## Instalacja
+
+### 1. Sklonuj repozytorium
+
+```bash
+git clone https://github.com/Lukas-Falko/CRM.git
+cd CRM
+```
+
+### 2. Zainstaluj zależności
+
+```bash
+pip install -r requirements.txt
+```
+
+### 3. Uruchom aplikację
+
+```bash
+python main.py
+```
