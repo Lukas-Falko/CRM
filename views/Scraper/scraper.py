@@ -34,7 +34,12 @@ class ScraperView(ctk.CTkFrame):
         self.left_frame, 
         text="Pobierz dane", 
         fg_color="#2c73d2",
-        command=lambda: sl.pobierzDane(self.url_entry.get(), self.check_var_csv.get(), self.check_var_exel.get())
+        command=lambda: sl.pobierzDane(
+                                    self.url_entry.get(), 
+                                    self.check_var_csv.get(), 
+                                    self.check_var_exel.get(), 
+                                    self.check_var_baza.get()
+                                )
         )
 
         self.btn_download.pack(pady=10, padx=20)
@@ -72,21 +77,31 @@ class ScraperView(ctk.CTkFrame):
                                         variable=self.check_var_exel,
                                         onvalue="on", 
                                         offvalue="off")
-        self.checkbox_exel.pack(pady=10, padx=30, side = "left")
+        self.checkbox_exel.pack(pady=10, padx=15, side = "left")
 
         self.checkbox_csv = ctk.CTkCheckBox(self.main_frame2, 
                                         text="CSV",
                                         variable=self.check_var_csv,
                                         onvalue="on", 
                                         offvalue="off")
-        self.checkbox_csv.pack(pady=10, padx=30, side = "left")
+        self.checkbox_csv.pack(pady=10, padx=15, side = "left")
 
         self.checkbox_baza = ctk.CTkCheckBox(self.main_frame2, 
                                         text="Baza danych",
                                         variable=self.check_var_baza,
                                         onvalue="on", 
                                         offvalue="off")
-        self.checkbox_baza.pack(pady=10, padx=30, side = "left")
+        self.checkbox_baza.pack(pady=10, padx=15, side = "left")
+
+
+        self.check_connection_butt = ctk.CTkButton(
+            self.main_frame2, 
+            text="Sprawdz połączenie", 
+            width=100, 
+            command=lambda: gz.sprawdz_polaczenie_z_baza()
+        )
+        self.check_connection_butt.pack(pady=10, padx=15, side = "right")
+
 
         
         

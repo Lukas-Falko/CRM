@@ -1,0 +1,1 @@
+pip install customtkinter bs4 requests psycopg2 pandas

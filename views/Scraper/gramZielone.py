@@ -1,15 +1,13 @@
 
 import requests
+import csv
+import os
+import psycopg2
+import pandas as pd
+
 from . import daneScrap as ds
 from . import scraper_logika as sl
 from . import gramZielone as gz
-import csv
-import os
-import os
-import pandas as pd
-
-
-from tkinter import filedialog
 
 
 
@@ -61,7 +59,6 @@ def scrap_data(response):
         "Strona internetowa": strona,
     }
   
-
 def zapisz_do_excel(pakiet, sciezka_folderu):
     if not sciezka_folderu:
         print("Błąd: Nie wybrano folderu zapisu!")
@@ -117,10 +114,44 @@ def zapisz_do_csv(pakiet, sciezka_folderu):
     except Exception as e:
         print(f"Błąd zapisu CSV: {e}")
 
+def sprawdz_polaczenie_z_baza():
+    db_config = {
+        "host": "localhost",
+        "database": "GramWzielone",
+        "user": "postgres",
+        "password": "postgres",
+        "port": "5432"
+    }
+
+    conn = None
+    print("\n--- TEST DOSTĘPU DO BAZY POSTGRESQL ---")
+    
+    try:
+        # Próba otwarcia połączenia
+        conn = psycopg2.connect(**db_config)
+        
+        # Pobieramy wersję serwera, żeby mieć dowód, że faktycznie rozmawiamy z bazą
+        cur = conn.cursor()
+        cur.execute('SELECT version();')
+        db_version = cur.fetchone()
+        
+        print("✅ STATUS: POŁĄCZONO!")
+        print(f"✅ DOSTĘP: Przyznany dla użytkownika '{db_config['user']}'")
+        print(f"✅ INFO O SERWERZE: {db_version[0]}")
+        
+        cur.close()
+
+    except Exception as e:
+        print("❌ STATUS: BRAK DOSTĘPU!")
+        print(f"❌ POWÓD BŁĘDU: {e}")
+
+    finally:
+        if conn:
+            conn.close()
+            print("--- Koniec testu, połączenie zamknięte ---\n")
 
 
-
-def run(url_entry, check_csv, check_exel):
+def run(url_entry, check_csv, check_exel, check_dane):
 
     response = fetch_site(url_entry)
     pakiet = scrap_data(response)
@@ -132,6 +163,12 @@ def run(url_entry, check_csv, check_exel):
     if check_exel == "on":
         print("Zapisano plik do Exela")
         zapisz_do_excel(pakiet, sl.sciezka )
+
+    if check_dane == "on":
+        print("Zapisywanie do bazy danych....")
+        sprawdz_polaczenie_z_baza()
+        
+
            
     
 
