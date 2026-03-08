@@ -5,14 +5,15 @@ from tkinter import filedialog  # Dodane do obsługi okien wyboru plików
 
 sciezka = None
 
-def pobierzDane(url_entry):
+def pobierzDane(url_entry, check_csv, chcek_exel):
 
-    nowy_watek = threading.Thread(target=gz.run, args=(url_entry,))
+    nowy_watek = threading.Thread(target=gz.run, args=(url_entry, check_csv, chcek_exel))
     nowy_watek.start()
     print("Scraper wystartowal w tle")
 
 
 def wybierz_lokalizacje(entry_field):
+
     global sciezka
     
     

@@ -14,8 +14,8 @@ class ScraperView(ctk.CTkFrame):
        # Main frame 1
         self.main_frame = ctk.CTkFrame(self)
         self.main_frame.pack(
-        pady=10, 
-        padx=10, 
+        pady=5, 
+        padx=5, 
         fill="both", 
         )       
 
@@ -34,7 +34,7 @@ class ScraperView(ctk.CTkFrame):
         self.left_frame, 
         text="Pobierz dane", 
         fg_color="#2c73d2",
-        command=lambda: sl.pobierzDane(self.url_entry.get())
+        command=lambda: sl.pobierzDane(self.url_entry.get(), self.check_var_csv.get(), self.check_var_exel.get())
         )
 
         self.btn_download.pack(pady=10, padx=20)
@@ -54,15 +54,18 @@ class ScraperView(ctk.CTkFrame):
         )
         self.browse_butt.pack(pady=10, padx=20)
 
-
+        # Main frame 2
         self.main_frame2 = ctk.CTkFrame(self)
-        self.main_frame2.pack(pady=5, 
-        padx=10, 
-        fill="both" )   
+        self.main_frame2.pack(
+                            pady=5, 
+                            padx=5, 
+                            fill="both" 
+        )   
 
 
         self.check_var_csv = ctk.StringVar(value="off")
         self.check_var_exel = ctk.StringVar(value="off")
+        self.check_var_baza = ctk.StringVar(value="off")
  
         self.checkbox_exel = ctk.CTkCheckBox(self.main_frame2, 
                                         text="Exel",
@@ -78,12 +81,20 @@ class ScraperView(ctk.CTkFrame):
                                         offvalue="off")
         self.checkbox_csv.pack(pady=10, padx=30, side = "left")
 
+        self.checkbox_baza = ctk.CTkCheckBox(self.main_frame2, 
+                                        text="Baza danych",
+                                        variable=self.check_var_baza,
+                                        onvalue="on", 
+                                        offvalue="off")
+        self.checkbox_baza.pack(pady=10, padx=30, side = "left")
 
         
         
-        # --- SEKCJA WYŚWIETLANIA DANYCH (Dół) ---
+        # Main frame 3
         self.output_frame = ctk.CTkFrame(self)
-        self.output_frame.pack(pady=(5, 20), padx=10, fill="both", expand=True)
+        self.output_frame.pack(pady= 5, padx=5, fill="both", expand=True)
+
+
 
         self.output_label = ctk.CTkLabel(self.output_frame, text="Logi / Pobrane dane:", font=("Arial", 12, "italic"))
         self.output_label.pack(pady=(5, 0), padx=10, anchor="w")

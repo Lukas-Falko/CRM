@@ -11,7 +11,25 @@
 
 Scraper GramWzielone - Scrapuje dane firm do pliku exel bądz CSV.
 
+## Zakładka scraper
 
+Pozwala na scrapowanie danych ze strony https://www.gramwzielone.pl/baza-firm.
+
+
+
+
+![Opis](<zrzut_ekranu_gui.png>) 
+
+- Tutaj wpisujemy link do strony z danymi
+
+
+
+Okienko 1 - wpisujemy link z zakladki baza firm
+Okienko 2 - wybieramy lokalizacje zapisu
+
+Frame 2 - wybieramy format zapisu
+
+Pole tekstowe wysweitla zapisane dane mozna je kopiować.
 
 ---
 

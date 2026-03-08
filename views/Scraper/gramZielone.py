@@ -2,8 +2,11 @@
 import requests
 from . import daneScrap as ds
 from . import scraper_logika as sl
+from . import gramZielone as gz
 import csv
 import os
+import os
+import pandas as pd
 
 
 from tkinter import filedialog
@@ -58,12 +61,45 @@ def scrap_data(response):
         "Strona internetowa": strona,
     }
   
+
+def zapisz_do_excel(pakiet, sciezka_folderu):
+    if not sciezka_folderu:
+        print("Błąd: Nie wybrano folderu zapisu!")
+        return
+
+    sciezka_pliku = os.path.join(sciezka_folderu, "wyniki_scrapingu.xlsx")
+    
+    # Tworzymy DataFrame z jednego wiersza (naszego pakietu)
+    nowy_wiersz = pd.DataFrame([pakiet])
+
+    try:
+        if os.path.isfile(sciezka_pliku):
+            # Jeśli plik istnieje, dopisujemy dane (append)
+            with pd.ExcelWriter(sciezka_pliku, engine='openpyxl', mode='a', if_sheet_exists='overlay') as writer:
+                # Wczytujemy istniejący arkusz, aby znaleźć ostatni wiersz
+                try:
+                    istniejace_dane = pd.read_excel(sciezka_pliku)
+                    start_row = len(istniejace_dane) + 1
+                    # Zapisujemy bez nagłówka, zaczynając od nowego wiersza
+                    nowy_wiersz.to_excel(writer, index=False, header=False, startrow=start_row)
+                except Exception:
+                    # W razie problemów z odczytem, nadpisujemy plik bezpiecznie
+                    nowy_wiersz.to_excel(writer, index=False)
+        else:
+            # Jeśli plik nie istnieje, tworzymy go i zapisujemy nagłówki
+            nowy_wiersz.to_excel(sciezka_pliku, index=False, engine='openpyxl')
+
+        print(f"Pomyślnie zapisano firmę do Excela: {pakiet['Nazwa']}")
+        
+    except Exception as e:
+        print(f"Błąd zapisu Excel: {e}")
+
 def zapisz_do_csv(pakiet, sciezka_folderu):
     if not sciezka_folderu:
         print("Błąd: Nie wybrano folderu zapisu!")
         return
 
-    # Tworzymy pełną ścieżkę do pliku
+    
     sciezka_pliku = os.path.join(sciezka_folderu, "wyniki_scrapingu.csv")
     plik_istnieje = os.path.isfile(sciezka_pliku)
 
@@ -81,14 +117,22 @@ def zapisz_do_csv(pakiet, sciezka_folderu):
     except Exception as e:
         print(f"Błąd zapisu CSV: {e}")
 
-def run(url_entry):
+
+
+
+def run(url_entry, check_csv, check_exel):
+
     response = fetch_site(url_entry)
     pakiet = scrap_data(response)
 
+    if check_csv == "on":
+        print("Zapisano plik do cvs")
+        zapisz_do_csv(pakiet, sl.sciezka)
     
-    zapisz_do_csv(pakiet, sl.sciezka)
-    
-    
+    if check_exel == "on":
+        print("Zapisano plik do Exela")
+        zapisz_do_excel(pakiet, sl.sciezka )
+           
     
 
   
