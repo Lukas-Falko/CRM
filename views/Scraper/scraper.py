@@ -102,6 +102,14 @@ class ScraperView(ctk.CTkFrame):
         )
         self.check_connection_butt.pack(pady=10, padx=15, side = "right")
 
+        self.check_clear = ctk.CTkButton(
+            self.main_frame2, 
+            text="Wyczyść konsole", 
+            width=100, 
+            command= print("Czyszcze konsole")
+        )
+        self.check_clear.pack(pady=10, padx=15, side = "right")
+
 
         
         

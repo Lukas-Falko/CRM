@@ -63,7 +63,7 @@ Pozwala określić miejsce zapisania wygenerowanego pliku.
 
 ## Wybór formatu zapisu
 
-Możliwość zapisania danych w formacie CSV i Exel:
+Możliwość zapisania danych w formacie **CSV / Exel** oraz jest możliwość zapisu do **bazy danych**:
 
 * Excel
 * CSV

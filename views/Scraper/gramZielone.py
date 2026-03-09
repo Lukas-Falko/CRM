@@ -4,11 +4,15 @@ import csv
 import os
 import psycopg2
 import pandas as pd
+from dotenv import load_dotenv
+
 
 from . import daneScrap as ds
 from . import scraper_logika as sl
 from . import gramZielone as gz
 
+
+load_dotenv()
 
 
 class data:
@@ -115,22 +119,22 @@ def zapisz_do_csv(pakiet, sciezka_folderu):
         print(f"Błąd zapisu CSV: {e}")
 
 def sprawdz_polaczenie_z_baza():
+
     db_config = {
-        "host": "localhost",
-        "database": "GramWzielone",
-        "user": "postgres",
-        "password": "postgres",
-        "port": "5432"
+        "host": os.getenv("DB_HOST"),
+        "database": os.getenv("DB_DATABASE"),
+        "user": os.getenv("DB_USER"),
+        "password": os.getenv("DB_PASSWORD"),
+        "port": os.getenv("DB_PORT")
     }
 
     conn = None
     print("\n--- TEST DOSTĘPU DO BAZY POSTGRESQL ---")
     
     try:
-        # Próba otwarcia połączenia
+
         conn = psycopg2.connect(**db_config)
-        
-        # Pobieramy wersję serwera, żeby mieć dowód, że faktycznie rozmawiamy z bazą
+               
         cur = conn.cursor()
         cur.execute('SELECT version();')
         db_version = cur.fetchone()
@@ -150,11 +154,73 @@ def sprawdz_polaczenie_z_baza():
             conn.close()
             print("--- Koniec testu, połączenie zamknięte ---\n")
 
+def zapisz_dane_do_bazy(package):
+
+    
+    connection_params = {
+        "host": os.getenv("DB_HOST"),
+        "database": os.getenv("DB_DATABASE"),
+        "user": os.getenv("DB_USER"),
+        "password": os.getenv("DB_PASSWORD"),
+        "port": os.getenv("DB_PORT")
+    }
+
+
+    nazwa = package.get("Nazwa")
+    data_dodania = package.get("Data")
+    adres = package.get("Adres")
+    miasto = package.get("Miasto")
+    kraj = package.get("Kraj")
+    tel = package.get("Telefon")
+    mail = package.get("Email")
+    www = package.get("Strona internetowa")
+
+
+    try:
+        # Nawiązanie połączenia
+        connection = psycopg2.connect(**connection_params)
+        cursor = connection.cursor()
+
+        # Zapytanie SQL - nazwy kolumn muszą być takie jak na screenie!
+        insert_query = """
+        INSERT INTO "Baza Firm" (nazwa, data_dodania, adres, miasto, kraj, telefon, email, strona_www)
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+        """
+
+        # Wyciąganie wartości z obiektu w odpowiedniej kolejności
+        values_to_insert = (
+            package["Nazwa"],
+            package["Data"],
+            package["Adres"],
+            package["Miasto"],
+            package["Kraj"],
+            package["Telefon"],
+            package["Email"],
+            package["Strona internetowa"]
+        )
+
+        # Wykonanie zapytania
+        cursor.execute(insert_query, values_to_insert)
+        
+        # ZATWIERDZENIE ZMIAN (bardzo ważne w SQL!)
+        connection.commit()
+        print("Dane zapisane pomyślnie w tabeli Baza Firm!")
+
+    except Exception as error:
+        print(f"Błąd podczas łączenia z bazą: {error}")
+
+    finally:
+        if connection:
+            cursor.close()
+            connection.close()
+
+    
 
 def run(url_entry, check_csv, check_exel, check_dane):
 
     response = fetch_site(url_entry)
     pakiet = scrap_data(response)
+    
 
     if check_csv == "on":
         print("Zapisano plik do cvs")
@@ -167,6 +233,7 @@ def run(url_entry, check_csv, check_exel, check_dane):
     if check_dane == "on":
         print("Zapisywanie do bazy danych....")
         sprawdz_polaczenie_z_baza()
+        zapisz_dane_do_bazy(pakiet)
         
 
            
