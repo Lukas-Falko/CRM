@@ -106,7 +106,7 @@ class ScraperView(ctk.CTkFrame):
             self.main_frame2, 
             text="Wyczyść konsole", 
             width=100, 
-            command= print("Czyszcze konsole")
+            command= lambda: sl.wyczysc_konsole(self.output_text)
         )
         self.check_clear.pack(pady=10, padx=15, side = "right")
 

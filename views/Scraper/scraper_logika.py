@@ -28,3 +28,5 @@ def wybierz_lokalizacje(entry_field):
         sciezka = wybor
         print(f"Globalna sciezka to teraz: {sciezka}")
 
+def wyczysc_konsole(textbox):
+    textbox.delete("1.0", "end")
