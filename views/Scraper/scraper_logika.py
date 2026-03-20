@@ -2,8 +2,9 @@ import threading
 from . import gramZielone as gz
 from . import scraper as sc
 from tkinter import filedialog  # Dodane do obsługi okien wyboru plików
+from . import dane
 
-sciezka = None
+
 
 def pobierzDane(url_entry, check_csv, chcek_exel, check_dane):
 
@@ -18,15 +19,17 @@ def pobierzDane(url_entry, check_csv, chcek_exel, check_dane):
     print("Scraper wystartowal w tle")
 
 
-def wybierz_lokalizacje(entry_field):
+def wybierz_lokalizacje():
+    
 
-    global sciezka
-    
-    
     wybor = filedialog.askdirectory()
+    
     if wybor:
-        sciezka = wybor
-        print(f"Globalna sciezka to teraz: {sciezka}")
+        dane.scrapingPath = wybor
+                            
+        print(f"Globalna sciezka to teraz: {dane.scrapingPath}")
+    else:
+        print(f"brak ścieżki")
 
 def wyczysc_konsole(textbox):
     textbox.delete("1.0", "end")

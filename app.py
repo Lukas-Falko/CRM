@@ -2,6 +2,7 @@ import customtkinter as ctk
 import sys
 sys.dont_write_bytecode = True
 import views.Dasboard.dashboard_logic as dl
+import views.Login.login as Login
 
 
 from app_logic import NavigationMixin 
@@ -17,8 +18,6 @@ class Sidebar:
 
         
         ctk.CTkButton(self.sidebar_frame, text="Dashboard", command=self.action_dashboard).pack(pady=10, padx=20)
-        #ctk.CTkButton(self.sidebar_frame, text="Klienci", command=self.action_clients).pack(pady=10, padx=20)
-        #ctk.CTkButton(self.sidebar_frame, text="Ustawienia", command=self.action_settings).pack(pady=10, padx=20)
         ctk.CTkButton(self.sidebar_frame, text="Scraper", command=self.action_scraper).pack(pady=10, padx=20)
 
 class TkinterLogger:
@@ -54,13 +53,11 @@ class App(ctk.CTk, Sidebar, NavigationMixin):
         self.geometry("900x600")
         self.grid_columnconfigure(1, weight=1)
         self.grid_rowconfigure(0, weight=1)
+
+        
         
         self.przygotuj_widoki() 
-        self.buduj_sidebar() 
-        self.action_dashboard() 
-        
-        
-        
+        self.action_login()
 
 if __name__ == "__main__":
     app = App()

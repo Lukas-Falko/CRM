@@ -10,6 +10,7 @@ from dotenv import load_dotenv
 from . import daneScrap as ds
 from . import scraper_logika as sl
 from . import gramZielone as gz
+from . import dane as d
 
 
 load_dotenv()
@@ -19,6 +20,7 @@ class data:
     headers= {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/91.0.4472.124'}
 
 def fetch_site(url_entry): 
+
     try:
         
         response = requests.get(url_entry, headers=data.headers, timeout=10)
@@ -32,6 +34,7 @@ def fetch_site(url_entry):
             print("Connecting | Brak dostępu (403 - blokada).")
             
     except requests.exceptions.MissingSchema:
+        
         print(f"Błąd | Nieprawidłowy format URL: '{url_entry}'. Zapomniałeś o http://?")
     except requests.exceptions.ConnectionError:
         print(f"Błąd | Nie można połączyć się z serwerem: {url_entry}")
@@ -64,13 +67,14 @@ def scrap_data(response):
     }
   
 def zapisz_do_excel(pakiet, sciezka_folderu):
+    
     if not sciezka_folderu:
+
         print("Błąd: Nie wybrano folderu zapisu!")
         return
 
     sciezka_pliku = os.path.join(sciezka_folderu, "wyniki_scrapingu.xlsx")
     
-    # Tworzymy DataFrame z jednego wiersza (naszego pakietu)
     nowy_wiersz = pd.DataFrame([pakiet])
 
     try:
@@ -96,6 +100,7 @@ def zapisz_do_excel(pakiet, sciezka_folderu):
         print(f"Błąd zapisu Excel: {e}")
 
 def zapisz_do_csv(pakiet, sciezka_folderu):
+    
     if not sciezka_folderu:
         print("Błąd: Nie wybrano folderu zapisu!")
         return
@@ -105,7 +110,7 @@ def zapisz_do_csv(pakiet, sciezka_folderu):
     plik_istnieje = os.path.isfile(sciezka_pliku)
 
     try:
-        # 'utf-8-sig' sprawia, że polskie znaki dobrze wyglądają w Excelu
+       
         with open(sciezka_pliku, mode='a', newline='', encoding='utf-8-sig') as plik:
             writer = csv.DictWriter(plik, fieldnames=pakiet.keys(), delimiter=';')
 
@@ -224,25 +229,13 @@ def run(url_entry, check_csv, check_exel, check_dane):
 
     if check_csv == "on":
         print("Zapisano plik do cvs")
-        zapisz_do_csv(pakiet, sl.sciezka)
+        zapisz_do_csv(pakiet, d.scrapingPath)
     
     if check_exel == "on":
         print("Zapisano plik do Exela")
-        zapisz_do_excel(pakiet, sl.sciezka )
+        zapisz_do_excel(pakiet, d.scrapingPath)
 
     if check_dane == "on":
         print("Zapisywanie do bazy danych....")
         sprawdz_polaczenie_z_baza()
         zapisz_dane_do_bazy(pakiet)
-        
-
-           
-    
-
-  
-    
-    
- 
-    
- 
-

@@ -36,7 +36,7 @@ class ScraperView(ctk.CTkFrame):
         fg_color="#2c73d2",
         command=lambda: sl.pobierzDane(
                                     self.url_entry.get(), 
-                                    self.check_var_csv.get(), 
+                                    self.check_var_csv.get(), # on lub off
                                     self.check_var_exel.get(), 
                                     self.check_var_baza.get()
                                 )
@@ -48,14 +48,14 @@ class ScraperView(ctk.CTkFrame):
         self.right_frame = ctk.CTkFrame(self.main_frame, fg_color="gray25")
         self.right_frame.grid(row=0, column=1, pady=10, padx=(5, 10), sticky="nsew")
 
-        self.path_entry = ctk.CTkEntry(self.right_frame, placeholder_text="Wybierz folder lub plik...")
+        self.path_entry = ctk.CTkEntry(self.right_frame, placeholder_text="Wybierz folder lub plik...") # okienko do wyświetlania
         self.path_entry.pack(pady=(20, 10), padx=20, fill="x")
 
-        self.browse_butt = ctk.CTkButton(
+        self.browse_butt = ctk.CTkButton( # wybierz lokalizacje
             self.right_frame, 
             text="Przeglądaj", 
             width=100, 
-            command=lambda: sl.wybierz_lokalizacje(self.path_entry.get())
+            command=lambda: sl.wybierz_lokalizacje()
         )
         self.browse_butt.pack(pady=10, padx=20)
 
@@ -72,14 +72,14 @@ class ScraperView(ctk.CTkFrame):
         self.check_var_exel = ctk.StringVar(value="off")
         self.check_var_baza = ctk.StringVar(value="off")
  
-        self.checkbox_exel = ctk.CTkCheckBox(self.main_frame2, 
+        self.checkbox_exel = ctk.CTkCheckBox(self.main_frame2, #exel
                                         text="Exel",
                                         variable=self.check_var_exel,
                                         onvalue="on", 
                                         offvalue="off")
         self.checkbox_exel.pack(pady=10, padx=15, side = "left")
 
-        self.checkbox_csv = ctk.CTkCheckBox(self.main_frame2, 
+        self.checkbox_csv = ctk.CTkCheckBox(self.main_frame2, # csv
                                         text="CSV",
                                         variable=self.check_var_csv,
                                         onvalue="on", 
@@ -94,7 +94,7 @@ class ScraperView(ctk.CTkFrame):
         self.checkbox_baza.pack(pady=10, padx=15, side = "left")
 
 
-        self.check_connection_butt = ctk.CTkButton(
+        self.check_connection_butt = ctk.CTkButton( # sprawdz polaczenie
             self.main_frame2, 
             text="Sprawdz połączenie", 
             width=100, 
@@ -102,7 +102,7 @@ class ScraperView(ctk.CTkFrame):
         )
         self.check_connection_butt.pack(pady=10, padx=15, side = "right")
 
-        self.check_clear = ctk.CTkButton(
+        self.check_clear = ctk.CTkButton( # wyczysc konsole
             self.main_frame2, 
             text="Wyczyść konsole", 
             width=100, 
