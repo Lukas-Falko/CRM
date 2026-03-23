@@ -225,17 +225,20 @@ def run(url_entry, check_csv, check_exel, check_dane):
 
     response = fetch_site(url_entry)
     pakiet = scrap_data(response)
-    
+    sprawdzanie(pakiet)
 
-    if check_csv == "on":
-        print("Zapisano plik do cvs")
-        zapisz_do_csv(pakiet, d.scrapingPath)
-    
-    if check_exel == "on":
-        print("Zapisano plik do Exela")
-        zapisz_do_excel(pakiet, d.scrapingPath)
 
-    if check_dane == "on":
-        print("Zapisywanie do bazy danych....")
-        sprawdz_polaczenie_z_baza()
-        zapisz_dane_do_bazy(pakiet)
+    def sprawdzanie():
+
+        if check_csv == "on":
+            print("Zapisano plik do cvs")
+            zapisz_do_csv(pakiet, d.scrapingPath)
+
+        if check_exel == "on":
+            print("Zapisano plik do Exela")
+            zapisz_do_excel(pakiet, d.scrapingPath)
+
+        if check_dane == "on":
+            print("Zapisywanie do bazy danych....")
+            sprawdz_polaczenie_z_baza()
+            zapisz_dane_do_bazy(pakiet)

@@ -8,16 +8,14 @@ from . import dane
 
 def pobierzDane(url_entry, check_csv, chcek_exel, check_dane):
 
-    nowy_watek = threading.Thread(target=gz.run, args=(
-                                                        url_entry, 
-                                                        check_csv, 
-                                                        chcek_exel,
-                                                        check_dane
-                                                    )
+    nowy_watek = threading.Thread(
+    target=gz.run, 
+    args=(url_entry,check_csv,chcek_exel,check_dane) 
     )
-    nowy_watek.start()
-    print("Scraper wystartowal w tle")
 
+    nowy_watek.start()
+    
+    print("Scraper wystartowal w tle")
 
 def wybierz_lokalizacje():
     

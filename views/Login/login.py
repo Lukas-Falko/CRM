@@ -3,6 +3,8 @@ import views.Login.dane as dane
 from tkinter import messagebox
 
 
+
+
 class LoginView(ctk.CTkFrame):
     def __init__(self, master, **kwargs):
         super().__init__(master, **kwargs)
@@ -35,32 +37,59 @@ class LoginView(ctk.CTkFrame):
         self.login_btn.pack(pady=(20, 25), padx=40)
     zaloguj = 0
     
+    
+
     def _zaloguj(self):
-        
+                
         password = self.getPassword()
 
         login = self.getLogin()
 
+        
+         
+        # IF | odpowiedzialny za logike logowania
 
-        if not login and not password:
+        if dane.probyLogowania > 5:
+            self.login_btn.configure(state="disabled", text="Blokada (3 min)")
+            self.master.after(5000, self.odblokuj_przycisk) # 1000 = 1s
+        else:
+            pass
+
+
+        # IF | czy haslo i login istnieja w okienkach
+
+        if not login and not password: 
             self.pokaz_alert("Brak hasla i loginu")
             return
         if not login:
             self.pokaz_alert("Brak loginu")
         if not password:
             self.pokaz_alert("Brak hasla")
+
+
+        # FOR IF | sprawdzanie czy login i haslo sie zgadzaja z danymi w bazie
+
         
+        znalezionyUser = None
+
+        for user in dane.baza_uzytkownikow:
+            if user["login"] == login:
+                znalezionyUser = user
+                break
         
-        
-        if login and password:
-            if dane.haslo == password and dane.login == login:
+
+        if znalezionyUser is None:
+            self.pokaz_alert("Błędny login lub hasło")
+            dane.probyLogowania = dane.probyLogowania + 1
+
+        else:
+            if znalezionyUser["haslo"] == password:
                 self.master.buduj_sidebar() 
                 self.master.action_dashboard()
                 self.pokaz_alert("Gratulacje zalogowano")
             else:
-                self.pokaz_alert("Bledne haslo albo login")
-
-        
+                self.pokaz_alert("Błędny login lub hasło")
+                dane.probyLogowania = dane.probyLogowania + 1
         
     def getPassword(self):
 
@@ -77,6 +106,11 @@ class LoginView(ctk.CTkFrame):
     
         messagebox.showinfo(title="Alert", message=alert)
         
+    def odblokuj_przycisk(self):
+    
+        self.login_btn.configure(state="normal", text="Zaloguj")
+        self.pokaz_alert("Możesz spróbować ponownie")
+        dane.probyLogowania = 0
 
 
 
