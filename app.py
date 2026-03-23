@@ -57,7 +57,9 @@ class App(ctk.CTk, Sidebar, NavigationMixin):
         
         
         self.przygotuj_widoki() 
-        self.action_login()
+        #self.action_login() logika wywolujaca logowanie 
+        self.buduj_sidebar() # zakomentuj jezeli uzywasz logiki login
+        self.action_dashboard() 
 
 if __name__ == "__main__":
     app = App()
