@@ -10,8 +10,6 @@ from dotenv import load_dotenv
 from . import daneScrap as ds
 from . import scraper_logika as sl
 from . import dane as d
-
-
 load_dotenv()
 
 
