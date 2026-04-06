@@ -1,7 +1,15 @@
 from bs4 import BeautifulSoup
 
 
-def pobierz_firme(response):
+def log_message(output_widget, message):
+    """Directly update the output widget with a message"""
+    if output_widget and message:
+        output_widget.insert("end", f"{message.strip()}\n")
+        output_widget.see("end")
+        output_widget.update()
+
+
+def pobierz_firme(response, output_widget=None):
 
     soup = BeautifulSoup(response.text, 'html.parser')
 
@@ -9,12 +17,12 @@ def pobierz_firme(response):
     
     if etykieta:
         tekst = etykieta.get_text(strip=True)
-        print(f"Scraping | Firmy: {tekst}")
+        log_message(output_widget, f"Scraping | Firmy: {tekst}")
         return tekst
-    print("Brak nazwy firmy")
+    log_message(output_widget, "Brak nazwy firmy")
     return None
 
-def pobierz_date(response):
+def pobierz_date(response, output_widget=None):
 
     soup = BeautifulSoup(response.text, 'html.parser')
 
@@ -22,13 +30,13 @@ def pobierz_date(response):
     etykieta_date = soup.find('div', class_='article-text--date') 
     date_tekst = etykieta_date.get_text(strip=True)
     if date_tekst:
-        print(f"Scraping | Data: {date_tekst}")
+        log_message(output_widget, f"Scraping | Data: {date_tekst}")
         return date_tekst
         
     else:
-        print("Scraping | Data: Brak")
+        log_message(output_widget, "Scraping | Data: Brak")
 
-def pobierz_adres(response):
+def pobierz_adres(response, output_widget=None):
     soup = BeautifulSoup(response.text, 'html.parser')
 
     main_div = soup.find('div', class_='entry-text--fields-lbl', string=lambda t: t and 'Adres' in t)
@@ -39,13 +47,13 @@ def pobierz_adres(response):
         
         if etykieta_adres:
             adres_tekst = etykieta_adres.get_text(strip=True)
-            print(f"Scraping | Adres: {adres_tekst}")
+            log_message(output_widget, f"Scraping | Adres: {adres_tekst}")
             return adres_tekst
            
-    print("Nie znaleziono adresu")
+    log_message(output_widget, "Nie znaleziono adresu")
     return None
 
-def pobierz_miasto(response):
+def pobierz_miasto(response, output_widget=None):
     soup = BeautifulSoup(response.text, 'html.parser')
 
     main_div = soup.find('div', class_='entry-text--fields-lbl', string=lambda t: t and 'Miasto' in t)
@@ -56,13 +64,13 @@ def pobierz_miasto(response):
         
         if etykieta_miasto:
             adres_tekst = etykieta_miasto.get_text(strip=True)
-            print(f"Scraping | Miasto: {adres_tekst}")
+            log_message(output_widget, f"Scraping | Miasto: {adres_tekst}")
             return adres_tekst
            
-    print("Nie znaleziono adresu")
+    log_message(output_widget, "Nie znaleziono adresu")
     return None
 
-def pobierz_kraj(response):
+def pobierz_kraj(response, output_widget=None):
     soup = BeautifulSoup(response.text, 'html.parser')
 
     main_div = soup.find('div', class_='entry-text--fields-lbl', string=lambda t: t and 'Kraj' in t)
@@ -73,13 +81,13 @@ def pobierz_kraj(response):
         
         if etykieta_kraj:
             kraj_tekst = etykieta_kraj.get_text(strip=True)
-            print(f"Scraping | Kraj: {kraj_tekst}")
+            log_message(output_widget, f"Scraping | Kraj: {kraj_tekst}")
             return kraj_tekst
            
-    print("Scraping | Kraj: nie znaleziono")
+    log_message(output_widget, "Scraping | Kraj: nie znaleziono")
     return None
 
-def pobierz_telefon(response):
+def pobierz_telefon(response, output_widget=None):
     soup = BeautifulSoup(response.text, 'html.parser')
 
     main_div = soup.find('div', class_='entry-text--fields-lbl', string=lambda t: t and 'Telefon' in t)
@@ -90,13 +98,13 @@ def pobierz_telefon(response):
         
         if etykieta_telefon:
             telefon_tekst = etykieta_telefon.get_text(strip=True)
-            print(f"Scraping | Telefon: {telefon_tekst}")
+            log_message(output_widget, f"Scraping | Telefon: {telefon_tekst}")
             return telefon_tekst
            
-    print("Scraping | Telefon: nie znaleziono")
+    log_message(output_widget, "Scraping | Telefon: nie znaleziono")
     return None
 
-def pobierz_email(response):
+def pobierz_email(response, output_widget=None):
     soup = BeautifulSoup(response.text, 'html.parser')
 
     main_div = soup.find('div', class_='entry-text--fields-lbl', string=lambda t: t and 'E-mail' in t)
@@ -107,13 +115,13 @@ def pobierz_email(response):
         
         if etykieta_email:
             email_tekst = etykieta_email.get_text(strip=True)
-            print(f"Scraping | Email: {email_tekst}")
+            log_message(output_widget, f"Scraping | Email: {email_tekst}")
             return email_tekst
            
-    print("Scraping | Email: nie znaleziono")
+    log_message(output_widget, "Scraping | Email: nie znaleziono")
     return None
 
-def pobierz_strona(response):
+def pobierz_strona(response, output_widget=None):
     soup = BeautifulSoup(response.text, 'html.parser')
 
     main_div = soup.find('div', class_='entry-text--fields-lbl', string=lambda t: t and 'Strona internetowa' in t)
@@ -124,10 +132,8 @@ def pobierz_strona(response):
         
         if etykieta_strona:
             strona_tekst = etykieta_strona.get_text(strip=True)
-            print(f"Scraping | Strona internetowa: {strona_tekst}")
+            log_message(output_widget, f"Scraping | Strona internetowa: {strona_tekst}")
             return strona_tekst
            
-    print("Scraping | Strona internetowa: nie znaleziono")
+    log_message(output_widget, "Scraping | Strona internetowa: nie znaleziono")
     return None
-
-    

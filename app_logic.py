@@ -6,6 +6,7 @@ from views.Scraper.scraper import ScraperView
 import sys
 
 class NavigationMixin:
+    
     def przygotuj_widoki(self):
         
         self.views = {}

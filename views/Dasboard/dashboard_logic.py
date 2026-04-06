@@ -11,5 +11,5 @@ def czy_online():
         return response.status_code 
     except Exception as e:
         # Jeśli strona w ogóle nie odpowie, zwracamy np. 0 lub błąd
-        return 
+        return 0 
 

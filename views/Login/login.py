@@ -50,11 +50,9 @@ class LoginView(ctk.CTkFrame):
         # IF | odpowiedzialny za logike logowania
 
         if dane.probyLogowania > 5:
-            self.login_btn.configure(state="disabled", text="Blokada (3 min)")
-            self.master.after(5000, self.odblokuj_przycisk) # 1000 = 1s
-        else:
-            pass
-
+            self.login_btn.configure(state="disabled", text="Blokada (30 s)")
+            self.master.after(30000, self.odblokuj_przycisk) # 30000 = 30s
+            return
 
         # IF | czy haslo i login istnieja w okienkach
 
@@ -63,8 +61,10 @@ class LoginView(ctk.CTkFrame):
             return
         if not login:
             self.pokaz_alert("Brak loginu")
+            return
         if not password:
             self.pokaz_alert("Brak hasla")
+            return
 
 
         # FOR IF | sprawdzanie czy login i haslo sie zgadzaja z danymi w bazie
@@ -82,14 +82,14 @@ class LoginView(ctk.CTkFrame):
             self.pokaz_alert("Błędny login lub hasło")
             dane.probyLogowania = dane.probyLogowania + 1
 
+        elif znalezionyUser["haslo"] == password:
+            self.master.buduj_sidebar() 
+            self.master.action_dashboard()
+            self.pokaz_alert("Gratulacje zalogowano")
+            dane.probyLogowania = 0
         else:
-            if znalezionyUser["haslo"] == password:
-                self.master.buduj_sidebar() 
-                self.master.action_dashboard()
-                self.pokaz_alert("Gratulacje zalogowano")
-            else:
-                self.pokaz_alert("Błędny login lub hasło")
-                dane.probyLogowania = dane.probyLogowania + 1
+            self.pokaz_alert("Błędny login lub hasło")
+            dane.probyLogowania = dane.probyLogowania + 1
         
     def getPassword(self):
 

@@ -38,7 +38,8 @@ class ScraperView(ctk.CTkFrame):
                                     self.url_entry.get(), 
                                     self.check_var_csv.get(), # on lub off
                                     self.check_var_exel.get(), 
-                                    self.check_var_baza.get()
+                                    self.check_var_baza.get(),
+                                    self.output_text
                                 )
         )
 
@@ -55,7 +56,7 @@ class ScraperView(ctk.CTkFrame):
             self.right_frame, 
             text="Przeglądaj", 
             width=100, 
-            command=lambda: sl.wybierz_lokalizacje()
+            command=lambda: sl.wybierz_lokalizacje(self.output_text)
         )
         self.browse_butt.pack(pady=10, padx=20)
 
@@ -98,7 +99,7 @@ class ScraperView(ctk.CTkFrame):
             self.main_frame2, 
             text="Sprawdz połączenie", 
             width=100, 
-            command=lambda: gz.sprawdz_polaczenie_z_baza()
+            command=lambda: gz.sprawdz_polaczenie_z_baza(self.output_text)
         )
         self.check_connection_butt.pack(pady=10, padx=15, side = "right")
 

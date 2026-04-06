@@ -20,34 +20,10 @@ class Sidebar:
         ctk.CTkButton(self.sidebar_frame, text="Dashboard", command=self.action_dashboard).pack(pady=10, padx=20)
         ctk.CTkButton(self.sidebar_frame, text="Scraper", command=self.action_scraper).pack(pady=10, padx=20)
 
-class TkinterLogger:
-    def __init__(self, app_instance):
-        self.app = app_instance
-
-    def write(self, message):
-       
-        if message and message.strip():
-            
-            scraper_view = self.app.views.get("scraper")
-            
-            if scraper_view and hasattr(scraper_view, "output_text"):
-                
-                scraper_view.output_text.after(0, 
-                    lambda msg=message: self._update_ui(scraper_view.output_text, msg)
-                )
-
-    def _update_ui(self, textbox, msg):
-        textbox.insert("end", f"{msg.strip()}\n")
-        textbox.see("end")
-
-    def flush(self):
-        pass
-
 class App(ctk.CTk, Sidebar, NavigationMixin):
     
     def __init__(self):
-        super().__init__() 
-        sys.stdout = TkinterLogger(self)
+        super().__init__()
 
         self.title("Mój System CRM")
         self.geometry("900x600")
