@@ -2,7 +2,7 @@ import customtkinter as ctk
 import sys
 sys.dont_write_bytecode = True
 import views.Dasboard.dashboard_logic as dl
-import views.Login.login as Login
+
 
 
 from app_logic import NavigationMixin 
@@ -33,7 +33,7 @@ class App(ctk.CTk, Sidebar, NavigationMixin):
         
         
         self.przygotuj_widoki() 
-        #self.action_login() logika wywolujaca logowanie 
+       
         self.buduj_sidebar() # zakomentuj jezeli uzywasz logiki login
         self.action_dashboard() 
 
