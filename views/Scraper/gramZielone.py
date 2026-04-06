@@ -264,3 +264,15 @@ class TGE:
                 self.zapisz_dane_do_bazy(pakiet, output_widget)
         
         sprawdzanie()
+
+
+# Module-level instance and wrapper functions for backward compatibility
+_tge_instance = TGE()
+
+def run(url_entry, check_csv, check_exel, check_dane, output_widget=None):
+    """Module-level wrapper for TGE.run() method"""
+    return _tge_instance.run(url_entry, check_csv, check_exel, check_dane, output_widget)
+
+def sprawdz_polaczenie_z_baza(output_widget=None):
+    """Module-level wrapper for TGE.sprawdz_polaczenie_z_baza() method"""
+    return _tge_instance.sprawdz_polaczenie_z_baza(output_widget)

@@ -14,7 +14,12 @@ def log_message(output_widget, message):
 
 
 def pobierzDane(url_entry, check_csv, chcek_exel, check_dane, output_widget=None):
-
+    # Sprawdzenie czy został wybrany Excel lub CSV
+    if (check_csv == "on" or chcek_exel == "on") and (dane.scrapingPath is None or dane.scrapingPath == ""):
+        if output_widget:
+            log_message(output_widget, "Błąd: Musisz wybrać ścieżkę do zapisu dla Excel/CSV!")
+        return
+    
     nowy_watek = threading.Thread(
     target=gz.run, 
     args=(url_entry, check_csv, chcek_exel, check_dane, output_widget) 
