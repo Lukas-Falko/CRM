@@ -2,6 +2,11 @@ import customtkinter as ctk
 from . import gramZielone as gz  # Zakładam, że są w tym samym folderze
 from . import scraper_logika as sl
 
+
+
+# =========================== PLIK Z GLOWNYM GUI =========================== #
+
+
 class ScraperView(ctk.CTkFrame):
     def __init__(self, master, **kwargs):
         super().__init__(master, **kwargs)

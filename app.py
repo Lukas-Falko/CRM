@@ -19,6 +19,8 @@ class Sidebar:
         
         ctk.CTkButton(self.sidebar_frame, text="Dashboard", command=self.action_dashboard).pack(pady=10, padx=20)
         ctk.CTkButton(self.sidebar_frame, text="Scraper", command=self.action_scraper).pack(pady=10, padx=20)
+        ctk.CTkButton(self.sidebar_frame, text="TGE", command=self.action_tge).pack(pady=10, padx=20)
+
 
 class App(ctk.CTk, Sidebar, NavigationMixin):
     
