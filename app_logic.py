@@ -6,10 +6,6 @@ from views.TGE.tge import TgeView
 
 
 
-
-
-
-
 class NavigationMixin:
     
     def przygotuj_widoki(self):
@@ -21,6 +17,7 @@ class NavigationMixin:
         self.views["tge"] = TgeView(self, corner_radius=0, fg_color="transparent")
 
     def show_view(self, name):
+        
         for view in self.views.values():
             view.grid_forget()
         self.views[name].grid(row=0, column=1, sticky="nsew")

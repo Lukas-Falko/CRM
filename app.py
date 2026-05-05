@@ -8,6 +8,7 @@ import views.Dasboard.dashboard_logic as dl
 from app_logic import NavigationMixin 
 
 class Sidebar: 
+    
     def buduj_sidebar(self):
         
         self.sidebar_frame = ctk.CTkFrame(self, width=100, corner_radius=0)
@@ -29,6 +30,7 @@ class App(ctk.CTk, Sidebar, NavigationMixin):
 
         self.title("Mój System CRM")
         self.geometry("900x600")
+        self.minsize(800, 500)
         self.grid_columnconfigure(1, weight=1)
         self.grid_rowconfigure(0, weight=1)
 

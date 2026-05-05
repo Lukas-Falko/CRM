@@ -5,12 +5,15 @@ class DashboardView(ctk.CTkFrame):
     def __init__(self, master, **kwargs):
         super().__init__(master, **kwargs)
     
+
+
+        # ======= FRAME GŁÓWNY ======= #
         self.main_frame = ctk.CTkFrame(self)
         self.main_frame.pack(pady=1, padx=1, fill="both", expand=True)       
 
-        # Konfiguracja wag kolumn, żeby obie rozciągały się tak samo
+       
         self.main_frame.grid_columnconfigure(0, weight=1)
-        #self.main_frame.grid_columnconfigure(1, weight=1)
+        
 
 
 
