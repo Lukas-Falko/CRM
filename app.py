@@ -1,10 +1,6 @@
 import customtkinter as ctk
 import sys
 sys.dont_write_bytecode = True
-import views.Dasboard.dashboard_logic as dl
-
-
-
 from app_logic import NavigationMixin 
 
 class Sidebar: 
@@ -34,11 +30,9 @@ class App(ctk.CTk, Sidebar, NavigationMixin):
         self.grid_columnconfigure(1, weight=1)
         self.grid_rowconfigure(0, weight=1)
 
-        
-        
-        self.przygotuj_widoki() 
-       
-        self.buduj_sidebar() # zakomentuj jezeli uzywasz logiki login
+    
+        self.przygotuj_widoki()    
+        self.buduj_sidebar() 
         self.action_dashboard() 
 
 if __name__ == "__main__":

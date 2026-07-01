@@ -1,17 +1,10 @@
 import requests
 import csv
 import os
-import psycopg2
-import pandas as pd
-from dotenv import load_dotenv
-
 
 from . import daneScrap as ds
 from . import scraper_logika as sl
 from . import dane as d
-
-
-load_dotenv()
 
 
 def log_message(output_widget, message):
@@ -88,6 +81,9 @@ class TGE:
         nowy_wiersz = pd.DataFrame([pakiet])
 
         try:
+            # Importujemy pandas lokalnie aby nie blokować startu aplikacji
+            import pandas as pd
+
             if os.path.isfile(sciezka_pliku):
                 # Jeśli plik istnieje, dopisujemy dane (append)
                 with pd.ExcelWriter(sciezka_pliku, engine='openpyxl', mode='a', if_sheet_exists='overlay') as writer:
@@ -105,7 +101,7 @@ class TGE:
                 nowy_wiersz.to_excel(sciezka_pliku, index=False, engine='openpyxl')
 
             log_message(output_widget, f"Pomyślnie zapisano firmę do Excela: {pakiet['Nazwa']}")
-            
+
         except Exception as e:
             log_message(output_widget, f"Błąd zapisu Excel: {e}")
 
@@ -134,6 +130,12 @@ class TGE:
             log_message(output_widget, f"Błąd zapisu CSV: {e}")
 
     def sprawdz_polaczenie_z_baza(self, output_widget=None):
+        # Import psycopg2 tylko w momencie użycia, oraz załaduj .env jeśli potrzebne
+        try:
+            from dotenv import load_dotenv
+            load_dotenv()
+        except Exception:
+            pass
 
         db_config = {
             "host": os.getenv("DB_HOST"),
@@ -145,19 +147,19 @@ class TGE:
 
         conn = None
         log_message(output_widget, "\n--- TEST DOSTĘPU DO BAZY POSTGRESQL ---")
-        
+
         try:
+            import psycopg2
 
             conn = psycopg2.connect(**db_config)
-                
             cur = conn.cursor()
             cur.execute('SELECT version();')
             db_version = cur.fetchone()
-            
+
             log_message(output_widget, "✅ STATUS: POŁĄCZONO!")
             log_message(output_widget, f"✅ DOSTĘP: Przyznany dla użytkownika '{db_config['user']}'")
             log_message(output_widget, f"✅ INFO O SERWERZE: {db_version[0]}")
-            
+
             cur.close()
 
         except Exception as e:
@@ -192,6 +194,8 @@ class TGE:
 
 
         try:
+            import psycopg2
+
             # Nawiązanie połączenia
             connection = psycopg2.connect(**connection_params)
             cursor = connection.cursor()
@@ -216,7 +220,7 @@ class TGE:
 
             # Wykonanie zapytania
             cursor.execute(insert_query, values_to_insert)
-            
+
             # ZATWIERDZENIE ZMIAN (bardzo ważne w SQL!)
             connection.commit()
             log_message(output_widget, "Dane zapisane pomyślnie w tabeli Baza Firm!")
@@ -225,6 +229,15 @@ class TGE:
             log_message(output_widget, f"Błąd podczas łączenia z bazą: {error}")
 
         finally:
+            try:
+                cursor
+            except Exception:
+                cursor = None
+            try:
+                connection
+            except Exception:
+                connection = None
+
             if cursor:
                 cursor.close()
             if connection:
